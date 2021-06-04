@@ -27,7 +27,7 @@ RUN set -xe \
                           libwebp6 \
                           libwebp-dev \
                           zlib1g \
-                          zlib1g-dev \
+                          zlib1g-dev
 
 # INSTALL JDK8
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
