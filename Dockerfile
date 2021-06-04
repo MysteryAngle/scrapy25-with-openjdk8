@@ -1,7 +1,38 @@
 FROM debian:buster
 
+RUN set -xe \
+    && apt-get update \
+    && apt-get install -y autoconf \
+                          build-essential \
+                          curl \
+                          git \
+                          libffi-dev \
+                          libssl-dev \
+                          libtool \
+                          libxml2 \
+                          libxml2-dev \
+                          libxslt1.1 \
+                          libxslt1-dev \
+                          python3 \
+                          python3-dev \
+                          python3-distutils \
+                          vim-tiny \
+    && apt-get install -y libtiff5 \
+                          libtiff5-dev \
+                          libfreetype6-dev \
+                          libjpeg62-turbo \
+                          libjpeg62-turbo-dev \
+                          liblcms2-2 \
+                          liblcms2-dev \
+                          libwebp6 \
+                          libwebp-dev \
+                          zlib1g \
+                          zlib1g-dev \
+
+# INSTALL JDK8
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV JAVA_VERSION jdk8u292-b10
+
 RUN set -eux; \
     ARCH="$(dpkg --print-architecture)"; \
     case "${ARCH}" in \
@@ -41,38 +72,12 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 
+# INSTALL SCRAPY
 ENV SCRAPY_VERSION=2.5.0
 ENV SCRAPYRT_VERSION=v0.12
 ENV PILLOW_VERSION=8.2.0
 
 RUN set -xe \
-    && apt-get update \
-    && apt-get install -y autoconf \
-                          build-essential \
-                          curl \
-                          git \
-                          libffi-dev \
-                          libssl-dev \
-                          libtool \
-                          libxml2 \
-                          libxml2-dev \
-                          libxslt1.1 \
-                          libxslt1-dev \
-                          python3 \
-                          python3-dev \
-                          python3-distutils \
-                          vim-tiny \
-    && apt-get install -y libtiff5 \
-                          libtiff5-dev \
-                          libfreetype6-dev \
-                          libjpeg62-turbo \
-                          libjpeg62-turbo-dev \
-                          liblcms2-2 \
-                          liblcms2-dev \
-                          libwebp6 \
-                          libwebp-dev \
-                          zlib1g \
-                          zlib1g-dev \
     && curl -sSL https://bootstrap.pypa.io/get-pip.py | python3 \
     && pip install git+https://github.com/scrapy/scrapy.git@$SCRAPY_VERSION \
                    git+https://github.com/scrapinghub/scrapy-splash.git \
