@@ -1,41 +1,14 @@
 FROM debian:buster
 
-RUN set -xe \
-    && apt-get update \
-    && apt-get install -y autoconf \
-                          build-essential \
-                          locales \
-                          locales-all \
-                          curl \
-                          git \
-                          libffi-dev \
-                          libssl-dev \
-                          libtool \
-                          libxml2 \
-                          libxml2-dev \
-                          libxslt1.1 \
-                          libxslt1-dev \
-                          python3 \
-                          python3-dev \
-                          python3-distutils \
-                          vim-tiny \
-    && apt-get install -y libtiff5 \
-                          libtiff5-dev \
-                          libfreetype6-dev \
-                          libjpeg62-turbo \
-                          libjpeg62-turbo-dev \
-                          liblcms2-2 \
-                          liblcms2-dev \
-                          libwebp6 \
-                          libwebp-dev \
-                          zlib1g \
-                          zlib1g-dev
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends tzdata curl ca-certificates fontconfig locales \
+    && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+    && locale-gen en_US.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
 
-# INSTALL JDK8
+# INSTALL OPENJDK
 ENV JAVA_VERSION jdk8u292-b10
 
 RUN set -eux; \
@@ -83,6 +56,33 @@ ENV SCRAPYRT_VERSION=v0.12
 ENV PILLOW_VERSION=8.2.0
 
 RUN set -xe \
+    && apt-get update \
+    && apt-get install -y autoconf \
+                          build-essential \
+                          curl \
+                          git \
+                          libffi-dev \
+                          libssl-dev \
+                          libtool \
+                          libxml2 \
+                          libxml2-dev \
+                          libxslt1.1 \
+                          libxslt1-dev \
+                          python3 \
+                          python3-dev \
+                          python3-distutils \
+                          vim-tiny \
+    && apt-get install -y libtiff5 \
+                          libtiff5-dev \
+                          libfreetype6-dev \
+                          libjpeg62-turbo \
+                          libjpeg62-turbo-dev \
+                          liblcms2-2 \
+                          liblcms2-dev \
+                          libwebp6 \
+                          libwebp-dev \
+                          zlib1g \
+                          zlib1g-dev \
     && curl -sSL https://bootstrap.pypa.io/get-pip.py | python3 \
     && pip install git+https://github.com/scrapy/scrapy.git@$SCRAPY_VERSION \
                    git+https://github.com/scrapinghub/scrapy-splash.git \
