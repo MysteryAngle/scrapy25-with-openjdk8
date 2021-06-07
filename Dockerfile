@@ -4,6 +4,8 @@ RUN set -xe \
     && apt-get update \
     && apt-get install -y autoconf \
                           build-essential \
+                          locales \
+                          locales-all \
                           curl \
                           git \
                           libffi-dev \
@@ -29,8 +31,11 @@ RUN set -xe \
                           zlib1g \
                           zlib1g-dev
 
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+
 # INSTALL JDK8
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 ENV JAVA_VERSION jdk8u292-b10
 
 RUN set -eux; \
