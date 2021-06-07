@@ -1,5 +1,7 @@
 FROM debian:buster
 
+# INSTALL OPENJDK
+# FROM https://github.com/AdoptOpenJDK/openjdk-docker/blob/master/8/jdk/debian/Dockerfile.hotspot.releases.full
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 RUN apt-get update \
@@ -8,7 +10,6 @@ RUN apt-get update \
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
-# INSTALL OPENJDK
 ENV JAVA_VERSION jdk8u292-b10
 
 RUN set -eux; \
@@ -51,6 +52,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
 
 
 # INSTALL SCRAPY
+# FROM https://github.com/vimagick/dockerfiles/blob/master/scrapyd/py3/Dockerfile
 ENV SCRAPY_VERSION=2.5.0
 ENV SCRAPYRT_VERSION=v0.12
 ENV PILLOW_VERSION=8.2.0
